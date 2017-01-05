@@ -21,7 +21,6 @@ func Tar(srcPath, dstPath string) error {
 
 	// Make sure to check the error on Close.
 	if err = tw.Close(); err != nil {
-		log.Fatalln(err)
 		return err
 	}
 
@@ -46,25 +45,21 @@ func tarPath(path string, tw *tar.Writer) error {
 		}
 		file, err := os.Open(path)
 		if err != nil {
-			log.Fatalln(err)
 			return err
 		}
 		if _, err = io.Copy(tw, file); err != nil {
 			return err
 		}
-		log.Println("file :", path)
 	}
 
 	if fileInfo.Mode().IsDir() {
 		// tar each file and dir in the dir
 		var file *os.File
 		if file, err = os.Open(path); err != nil {
-			log.Fatalln(err)
 			return err
 		}
 		fileInfos, err := file.Readdir(0)
 		if err != nil {
-			log.Fatalln(err)
 			return err
 		}
 		for _, info := range fileInfos {
@@ -79,7 +74,7 @@ func tarPath(path string, tw *tar.Writer) error {
 func UnTar(srcPath, dstPath string) error {
 	tarFile, err := os.Open(srcPath)
 	if err != nil {
-		log.Fatalln(err)
+		return err
 	}
 	tr := tar.NewReader(tarFile)
 	for {
@@ -92,10 +87,10 @@ func UnTar(srcPath, dstPath string) error {
 		log.Println("fullPath", fullPath)
 		file, err := os.Create(fullPath)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		if _, err := io.Copy(file, tr); err != nil {
-			log.Fatalln(err)
+			return err
 		}
 		file.Close()
 	}

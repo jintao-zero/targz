@@ -7,7 +7,6 @@ import (
 )
 
 func main()  {
-    fmt.Print(os.Getwd())
     err := targz.Tar("test", "test.tar")
     if err != nil {
         fmt.Println("tar fail", err)

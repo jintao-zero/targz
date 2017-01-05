@@ -44,15 +44,14 @@ func UnTargz(srcPath, dstPath string) error {
 		}
 		fullPath := filepath.Join(dstPath, hdr.Name)
 		os.MkdirAll(filepath.Dir(fullPath), os.ModePerm)
-		log.Println("fullPath", fullPath)
 		file, err := os.Create(fullPath)
 		if err != nil {
-			log.Fatalln(err)
+			return err
 		}
-		defer file.Close()
 		if _, err := io.Copy(file, tr); err != nil {
-			log.Fatalln(err)
+			return err
 		}
+		file.Close()
 	}
 	return nil
 }
