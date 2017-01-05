@@ -21,8 +21,13 @@ func main()  {
 
     err = targz.UnTargz("test.tar.gz", "./")
     if err != nil {
-        fmt.Println("untargz faile", err)
+        fmt.Println("untargz fail", err)
         return
     }
 
+    err = targz.Targz("test", "t.tar.gz")
+    if err != nil {
+        fmt.Println("targz fail", err)
+        return
+    }
 }
