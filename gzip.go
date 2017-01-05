@@ -1,4 +1,4 @@
-package main
+package targz
 
 import (
 	"compress/gzip"
@@ -8,6 +8,11 @@ import (
 
 func Gzip(srcPath, dstPath string) error {
 	srcFile, err := os.Open(srcPath)
+	if err != nil {
+		return err
+	}
+	defer srcFile.Close()
+
 	dstFile, err := os.Create(dstPath)
 	if err != nil {
 		return err
@@ -46,3 +51,4 @@ func Gunzip(srcPath, dstPath string) error {
 	}
 	return nil
 }
+

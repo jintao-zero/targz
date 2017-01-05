@@ -1,4 +1,4 @@
-package main
+package targz
 
 import (
 	"archive/tar"
@@ -94,10 +94,11 @@ func UnTar(srcPath, dstPath string) error {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		defer file.Close()
 		if _, err := io.Copy(file, tr); err != nil {
 			log.Fatalln(err)
 		}
+		file.Close()
 	}
 	return nil
 }
+
